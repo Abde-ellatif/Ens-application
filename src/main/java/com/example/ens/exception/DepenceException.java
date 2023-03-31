@@ -1,2 +1,4 @@
-package com.example.ens.exception;public class DepenceException {
+package com.example.ens.exception;
+
+public class DepenceException extends Exception{
 }
