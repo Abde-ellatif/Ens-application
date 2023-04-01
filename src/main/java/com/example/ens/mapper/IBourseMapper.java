@@ -9,7 +9,7 @@ import com.example.ens.entities.Depence;
 import com.example.ens.entities.Source;
 import com.example.ens.entities.TypeDepence;
 
-@Mapper
+
 public interface IBourseMapper {
     BourseDTO fromBourse(Bourse bourse);
     Bourse fromBourseDTO(BourseDTO bourseDTO);
