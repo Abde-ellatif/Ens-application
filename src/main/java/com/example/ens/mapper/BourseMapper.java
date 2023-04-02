@@ -4,6 +4,9 @@ import com.example.ens.dto.*;
 import com.example.ens.entities.*;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+@Service
 public class BourseMapper implements IBourseMapper {
 
     @Override

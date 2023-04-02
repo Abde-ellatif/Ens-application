@@ -17,7 +17,6 @@ public class DepenceController {
     private DepenceRepo depenceRepo;
     //Creation d'un depence d'argent
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public Depence createDepence(@RequestBody Depence depence) {
         return depenceRepo.save(depence);
     }
@@ -27,21 +26,24 @@ public class DepenceController {
     public List<Depence> getAllDepences() {
         return depenceRepo.findAll();
     }
+    @GetMapping("/{id}")
+    public Depence getDepences(@PathVariable(name = "id") Long id) {
+        return depenceRepo.findById(id).orElse(null);
+    }
 
     // Mettre à jour une source existant
     @PutMapping("/{id}")
-    public Depence updateDepence(@PathVariable Long id, @RequestBody Depence detailsDepence) {
-        Depence depence = depenceRepo.findById(id)
+    public Depence updateDepence(@RequestBody Depence depence) {
+        /*Depence depence = depenceRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         depence.setRefDepence(detailsDepence.getRefDepence());
         depence.setDateDepence(detailsDepence.getDateDepence());
-        depence.setMontantDepence(detailsDepence.getMontantDepence());
+        depence.setMontantDepence(detailsDepence.getMontantDepence());*/
         return depenceRepo.save(depence);
     }
 
     // Supprimer un Depence existant
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDepence(@PathVariable Long id) {
         depenceRepo.deleteById(id);
     }

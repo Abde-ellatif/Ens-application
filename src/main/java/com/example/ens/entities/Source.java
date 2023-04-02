@@ -19,6 +19,6 @@ public class Source {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String objSource;
-    @OneToMany(mappedBy = "source")
-    List<Bourse> bourses=new ArrayList<>();
+    /*@OneToMany(mappedBy = "source", fetch = FetchType.EAGER)
+    List<Bourse> bourses=new ArrayList<>();*/
 }

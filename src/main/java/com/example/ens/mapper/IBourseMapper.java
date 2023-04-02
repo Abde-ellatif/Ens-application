@@ -8,7 +8,7 @@ import com.example.ens.entities.Bourse;
 import com.example.ens.entities.Depence;
 import com.example.ens.entities.Source;
 import com.example.ens.entities.TypeDepence;
-
+import org.springframework.context.annotation.Bean;
 
 public interface IBourseMapper {
     BourseDTO fromBourse(Bourse bourse);
