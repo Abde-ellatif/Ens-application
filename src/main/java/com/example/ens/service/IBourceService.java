@@ -4,6 +4,8 @@ import com.example.ens.dto.BourseDTO;
 import com.example.ens.dto.DepenceDTO;
 import com.example.ens.dto.SourceDTO;
 import com.example.ens.dto.TypeDepenceDTO;
+import com.example.ens.entities.Bourse;
+import com.example.ens.entities.Depence;
 import com.example.ens.exception.BourseException;
 import com.example.ens.exception.DepenceException;
 import com.example.ens.exception.SourceException;
@@ -17,7 +19,8 @@ public interface IBourceService {
     BourseDTO saveBourse(BourseDTO bourseDTO);
     BourseDTO updateBourse(BourseDTO bourseDTO) throws BourseException;
     BourseDTO getBourseById(Long idBourse) throws BourseException;
-    BourseDTO getAllBourseBySource(Long idSource) throws BourseException;
+    //BourseDTO getAllBourseBySource(Long idSource) throws BourseException;
+    List<Bourse> findAllBysource_id(Long id);
     List<BourseDTO> getAllBourse();
     void deletBourse(Long id) throws BourseException;
 
@@ -37,9 +40,10 @@ public interface IBourceService {
     DepenceDTO updateDepence(DepenceDTO depenceDTO) throws DepenceException;
     DepenceDTO getDepenceById(Long idDepence) throws DepenceException;
     List<DepenceDTO> getAllDepence();
-    List<DepenceDTO> getAllDepenceByBourse(Long idBource);
+    //List<DepenceDTO> getAllDepenceByBourse(Long idBource);
     void deletDepence(Long idDepence) throws DepenceException;
-
+    List<Depence> findAllByBourse_Id(Long id);
+    List<Depence> findAllByTypeDepence_id(Long id);
     //Type Depence
 
     TypeDepenceDTO saveTypeDepence(TypeDepenceDTO typeDepenceDTO);
@@ -47,4 +51,5 @@ public interface IBourceService {
     TypeDepenceDTO getTypeDepenceById(Long idTypeDepence) throws TypeDepenceException;
     List<TypeDepenceDTO>  getAllTypeDepence();
     void deletTypeDepence(Long idTypeDepence) throws TypeDepenceException;
+
 }

@@ -1,5 +1,6 @@
 package com.example.ens.entities;
 
+import com.example.ens.dto.BourseDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

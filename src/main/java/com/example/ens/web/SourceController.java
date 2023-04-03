@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("/Souce")
+@RequestMapping("/Source")
 public class SourceController {
     IBourceService service;
 
@@ -20,21 +20,28 @@ public class SourceController {
     public SourceDTO saveSource(@RequestBody SourceDTO sourceDTO)throws SourceException {
         return service.saveSource(sourceDTO);
     }
-    @PutMapping("/id")
-    public SourceDTO updateSource(@PathVariable Long id,@RequestBody SourceDTO sourceDTO) throws SourceException{
+    @PutMapping("/{id}")
+    public SourceDTO updateSource(@PathVariable(name = "id") Long id,@RequestBody SourceDTO sourceDTO) throws SourceException{
         sourceDTO.setId(id);
         return service.updateSource(sourceDTO);
     }
-    @GetMapping("/id")
-    public SourceDTO getSourceById(@PathVariable Long id) throws SourceException{
-        return service.getSourceById(id);
+    @GetMapping("/{id}")
+    public SourceDTO getSourceById(@PathVariable(name = "id") Long id) throws SourceException{
+        try
+        {
+            return service.getSourceById(id);
+        }catch (SourceException e)
+        {
+
+           throw  new SourceException("Source not found");
+        }
     }
     @GetMapping("AllSource")
     public List<SourceDTO> getAllSource(){
         return service.getAllSource();
     }
-    @DeleteMapping("/id")
-    public void deletSource(@PathVariable Long id) throws SourceException{
+    @DeleteMapping("/{id}")
+    public void deletSource(@PathVariable(name = "id") Long id) throws SourceException{
         service.deletSource(id);
     }
 

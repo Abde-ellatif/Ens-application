@@ -9,5 +9,6 @@ import java.util.List;
 public interface DepenceRepo extends JpaRepository<Depence,Long> {
 
     List<Depence> findAllByBourse_Id(Long id);
+    List<Depence> findAllByTypeDepence_id(Long id);
 
 }

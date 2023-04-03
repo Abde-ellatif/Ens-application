@@ -26,26 +26,26 @@ public class DepenceController {
     public DepenceDTO saveDepence(@RequestBody DepenceReq req)throws DecodeException {
         return service.saveDepence(req);
     }
-    @PutMapping("/id")
-    public DepenceDTO updateDepence(@PathVariable Long id,@RequestBody DepenceDTO depenceDTO) throws  DepenceException {
+    @PutMapping("/'{id}")
+    public DepenceDTO updateDepence(@PathVariable(name = "id") Long id,@RequestBody DepenceDTO depenceDTO) throws  DepenceException {
         depenceDTO.setId(id);
         return service.updateDepence(depenceDTO);
     }
-    @GetMapping("/id")
-    public DepenceDTO getDepenceById(@PathVariable Long id) throws DepenceException{
+    @GetMapping("/{id}")
+    public DepenceDTO getDepenceById(@PathVariable(name = "id") Long id) throws DepenceException{
         return service.getDepenceById(id);
     }
     @GetMapping("AllDepence")
     public List<DepenceDTO> getAllDepence(){
         return service.getAllDepence();
     }
-    @DeleteMapping("/id")
-    public void deletDepence(@PathVariable Long id) throws DepenceException{
-        service.deletDepence(id);
+    @DeleteMapping("/{id}")
+    public void deletDepence(@PathVariable(name = "id") Long idDeprnce) throws DepenceException{
+        service.deletDepence(idDeprnce);
     }
 
-    @GetMapping("/source/id")
+    /*@GetMapping("/source/id")
     public List<DepenceDTO> getAllDepenceByBourse(@PathVariable Long id) throws SourceException, DepenceException {
         return (List<DepenceDTO>) service.getAllDepenceByBourse(id);
-    }
+    }*/
 }

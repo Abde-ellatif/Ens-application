@@ -20,8 +20,8 @@ import com.example.ens.reposetory.TypeDepenceRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -42,8 +42,8 @@ public class BourseService implements IBourceService{
     }
 
     @Override
-    public BourseDTO getBourseById(Long idBourse ) throws BourseException {
-        Bourse bourse = bourseRepo.findById(idBourse).orElseThrow(() -> {
+    public BourseDTO getBourseById(Long id ) throws BourseException {
+        Bourse bourse = bourseRepo.findById(id).orElseThrow(() -> {
             return new BourseException("bourse not found");
         });
         BourseDTO bourseDTO = bourseMapper.fromBourse(bourse);
@@ -51,21 +51,28 @@ public class BourseService implements IBourceService{
     }
 
     @Override
+    public List<Bourse> findAllBysource_id(Long id) {
+        Bourse bourse= (Bourse) bourseRepo.findAllBysource_id(id);
+        return (List<Bourse>) bourse;
+    }
+
+    /*@Override
     public BourseDTO getAllBourseBySource(Long idSourse) throws BourseException {
         Bourse bourse = (Bourse) bourseRepo.findAllById(Collections.singleton(idSourse));
         BourseDTO bourseDTO = bourseMapper.fromBourse(bourse);
         Source source = (Source) bourseRepo.findAll();
         SourceDTO sourceDTO= bourseMapper.fromSource(source);
         return bourseDTO;
-    }
+    }*/
 
 
 
     @Override
     public List<BourseDTO> getAllBourse() {
-        Bourse bourse = (Bourse) bourseRepo.findAll();
-        BourseDTO bourseDTO= bourseMapper.fromBourse(bourse);
-        return (List<BourseDTO>) bourse;
+        List<BourseDTO> collect = bourseRepo.findAll().stream().map(data -> {
+            return bourseMapper.fromBourse(data);
+        }).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
@@ -103,9 +110,11 @@ public class BourseService implements IBourceService{
 
     @Override
     public List<SourceDTO> getAllSource() {
-        Source source = (Source) bourseRepo.findAll();
-        SourceDTO sourceDTO= bourseMapper.fromSource(source);
-        return (List<SourceDTO>) source;
+        List<SourceDTO> collect = sourceRepo.findAll().stream().map(data -> {
+            return bourseMapper.fromSource(data);
+        }).collect(Collectors.toList());
+        return collect;
+
     }
 
     @Override
@@ -142,19 +151,22 @@ public class BourseService implements IBourceService{
 
     @Override
     public List<DepenceDTO> getAllDepence() {
-        Depence depence = (Depence) depenceRepo.findAll();
-        DepenceDTO depenceDTO= bourseMapper.fromDepence(depence);
-        return (List<DepenceDTO>) depence;
+        List<DepenceDTO> collect = depenceRepo.findAll().stream().map(data -> {
+            return bourseMapper.fromDepence(data);
+        }).collect(Collectors.toList());
+        return collect;
     }
 
-    @Override
+
+
+    /*@Override
     public List<DepenceDTO> getAllDepenceByBourse(Long idBource) {
         Depence depence = (Depence) bourseRepo.findAllById(Collections.singleton(idBource));
         DepenceDTO depenceDTO = bourseMapper.fromDepence(depence);
         Bourse bourse = (Bourse) bourseRepo.findAll();
         BourseDTO bourseDTO= bourseMapper.fromBourse(bourse);
         return (List<DepenceDTO>) depenceDTO;
-    }
+    }*/
 
     @Override
     public void  deletDepence(Long id) throws DepenceException {
@@ -190,9 +202,10 @@ public class BourseService implements IBourceService{
 
     @Override
     public List<TypeDepenceDTO> getAllTypeDepence() {
-        TypeDepence typeDepence = (TypeDepence) typeDepenceRepo.findAll();
-        TypeDepenceDTO typeDepenceDTO= bourseMapper.fromTypeDepence(typeDepence);
-        return (List<TypeDepenceDTO>) typeDepence;
+        List<TypeDepenceDTO> collect = typeDepenceRepo.findAll().stream().map(data -> {
+            return bourseMapper.fromTypeDepence(data);
+        }).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
@@ -204,5 +217,17 @@ public class BourseService implements IBourceService{
         }
         TypeDepenceDTO typeDepenceDTO = bourseMapper.fromTypeDepence(typeDepence);
 
+    }
+
+    @Override
+    public List<Depence> findAllByBourse_Id(Long id) {
+        Depence depence = (Depence) depenceRepo.findAllByBourse_Id(id);
+        return (List<Depence>) depence;
+    }
+
+    @Override
+    public List<Depence> findAllByTypeDepence_id(Long id) {
+        Depence depence = (Depence) depenceRepo.findAllByTypeDepence_id(id);
+        return (List<Depence>) depence;
     }
 }
