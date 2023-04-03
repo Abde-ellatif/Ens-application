@@ -14,38 +14,37 @@ import java.util.List;
 public interface IBourceService {
 
     //Bouse
-    BourseDTO save(BourseDTO bourseDTO);
-    BourseDTO update(BourseDTO bourseDTO) throws BourseException;
+    BourseDTO saveBourse(BourseDTO bourseDTO);
+    BourseDTO updateBourse(BourseDTO bourseDTO) throws BourseException;
     BourseDTO getBourseById(Long idBourse) throws BourseException;
+    BourseDTO getAllBourseBySource(Long idSource) throws BourseException;
     List<BourseDTO> getAllBourse();
     void deletBourse(Long id) throws BourseException;
 
 
     //Source
 
-    SourceDTO save(SourceDTO sourceDTO);
-    SourceDTO update(SourceDTO sourceDTO) throws SourceException;
-    SourceDTO getSourceById(Long idSource) throws SourceException, BourseException;
+    SourceDTO saveSource(SourceDTO sourceDTO);
+    SourceDTO updateSource(SourceDTO sourceDTO) throws SourceException;
+    SourceDTO getSourceById(Long idSource) throws SourceException;
     List<SourceDTO> getAllSource();
     void deletSource(Long idSource) throws SourceException;
 
 
     //Depence
 
-    DepenceDTO save(DepenceDTO depenceDTO);
-    DepenceDTO update(DepenceDTO depenceDTO) throws DepenceException;
+    DepenceDTO saveDepence(DepenceDTO depenceDTO);
+    DepenceDTO updateDepence(DepenceDTO depenceDTO) throws DepenceException;
     DepenceDTO getDepenceById(Long idDepence) throws DepenceException;
     List<DepenceDTO> getAllDepence();
+    List<DepenceDTO> getAllDepenceByBourse(Long idBource);
     void deletDepence(Long idDepence) throws DepenceException;
 
     //Type Depence
 
-    TypeDepenceDTO save(TypeDepenceDTO typeDepenceDTO);
-    TypeDepenceDTO update(TypeDepenceDTO typeDepenceDTO) throws TypeDepenceException;
+    TypeDepenceDTO saveTypeDepence(TypeDepenceDTO typeDepenceDTO);
+    TypeDepenceDTO updateTypeDepence(TypeDepenceDTO typeDepenceDTO) throws TypeDepenceException;
     TypeDepenceDTO getTypeDepenceById(Long idTypeDepence) throws TypeDepenceException;
     List<TypeDepenceDTO>  getAllTypeDepence();
-    void deletTypeDepenceDTO(Long idTypeDepence) throws TypeDepenceException;
-
-
-
+    void deletTypeDepence(Long idTypeDepence) throws TypeDepenceException;
 }

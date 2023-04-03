@@ -17,8 +17,8 @@ public class TypeDepence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String objDepence;
-    @OneToMany(mappedBy = "typeDepence")
-    List<Depence> depences = new ArrayList<>();
+    /*@OneToMany(mappedBy = "typeDepence")
+    List<Depence> depences = new ArrayList<>();*/
 
 
 }

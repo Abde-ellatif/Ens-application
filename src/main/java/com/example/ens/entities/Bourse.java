@@ -27,8 +27,8 @@ public class Bourse {
     @ManyToOne
     @JoinColumn(name = "source_id")
     private Source source;
-    @OneToMany(mappedBy = "bourse")
-    List<Depence> depences=new ArrayList<>();
+    /*@OneToMany(mappedBy = "bourse")
+    List<Depence> depences=new ArrayList<>();*/
 
 
 }

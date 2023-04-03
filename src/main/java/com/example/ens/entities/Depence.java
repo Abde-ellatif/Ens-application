@@ -27,9 +27,13 @@ public class Depence {
     private String refDepence;
     private Date dateDepence;
     private double montantDepence;
+    private String benificiare;
     @ManyToOne
+    @JoinColumn(name = "TypeDepence_id")
     private TypeDepence typeDepence;
     @ManyToOne
+    @JoinColumn(name = "bourse_id")
     private Bourse bourse;
+
 
 }

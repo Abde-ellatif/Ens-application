@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface DepenceRepo extends JpaRepository<Depence,Long> {
 
+    List<Depence> findAllByBourse_Id(Long id);
+
 }

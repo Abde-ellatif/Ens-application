@@ -20,6 +20,7 @@ import com.example.ens.reposetory.TypeDepenceRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -29,13 +30,13 @@ public class BourseService implements IBourceService{
     BourseRepo bourseRepo;
     IBourseMapper bourseMapper;
     @Override
-    public BourseDTO save(BourseDTO bourseDTO) {
+    public BourseDTO saveBourse(BourseDTO bourseDTO) {
         Bourse save = bourseRepo.save(bourseMapper.fromBourseDTO(bourseDTO));
         return bourseMapper.fromBourse(save);
     }
 
     @Override
-    public BourseDTO update(BourseDTO bourseDTO) throws BourseException {
+    public BourseDTO updateBourse(BourseDTO bourseDTO) throws BourseException {
         Bourse save = bourseRepo.save(bourseMapper.fromBourseDTO(bourseDTO));
         return bourseMapper.fromBourse(save);
     }
@@ -48,6 +49,17 @@ public class BourseService implements IBourceService{
         BourseDTO bourseDTO = bourseMapper.fromBourse(bourse);
         return bourseDTO;
     }
+
+    @Override
+    public BourseDTO getAllBourseBySource(Long idSourse) throws BourseException {
+        Bourse bourse = (Bourse) bourseRepo.findAllById(Collections.singleton(idSourse));
+        BourseDTO bourseDTO = bourseMapper.fromBourse(bourse);
+        Source source = (Source) bourseRepo.findAll();
+        SourceDTO sourceDTO= bourseMapper.fromSource(source);
+        return bourseDTO;
+    }
+
+
 
     @Override
     public List<BourseDTO> getAllBourse() {
@@ -69,13 +81,13 @@ public class BourseService implements IBourceService{
     SourceRepo sourceRepo;
 
     @Override
-    public SourceDTO save(SourceDTO sourceDTO) {
+    public SourceDTO saveSource(SourceDTO sourceDTO) {
         Source save = sourceRepo.save(bourseMapper.fromSourceDTO(sourceDTO));
         return bourseMapper.fromSource(save);
     }
 
     @Override
-    public SourceDTO update(SourceDTO sourceDTO) throws SourceException {
+    public SourceDTO updateSource(SourceDTO sourceDTO) throws SourceException {
         Source save = sourceRepo.save(bourseMapper.fromSourceDTO(sourceDTO));
         return bourseMapper.fromSource(save);
     }
@@ -108,13 +120,13 @@ public class BourseService implements IBourceService{
     }
     DepenceRepo depenceRepo;
     @Override
-    public DepenceDTO save(DepenceDTO depenceDTO) {
+    public DepenceDTO saveDepence(DepenceDTO depenceDTO) {
         Depence save = depenceRepo.save(bourseMapper.fromDepenceDTO(depenceDTO));
         return bourseMapper.fromDepence(save);
     }
 
     @Override
-    public DepenceDTO update(DepenceDTO depenceDTO) throws DepenceException {
+    public DepenceDTO updateDepence(DepenceDTO depenceDTO) throws DepenceException {
         Depence save = depenceRepo.save(bourseMapper.fromDepenceDTO(depenceDTO));
         return bourseMapper.fromDepence(save);
     }
@@ -136,6 +148,15 @@ public class BourseService implements IBourceService{
     }
 
     @Override
+    public List<DepenceDTO> getAllDepenceByBourse(Long idBource) {
+        Depence depence = (Depence) bourseRepo.findAllById(Collections.singleton(idBource));
+        DepenceDTO depenceDTO = bourseMapper.fromDepence(depence);
+        Bourse bourse = (Bourse) bourseRepo.findAll();
+        BourseDTO bourseDTO= bourseMapper.fromBourse(bourse);
+        return (List<DepenceDTO>) depenceDTO;
+    }
+
+    @Override
     public void  deletDepence(Long id) throws DepenceException {
         Depence depence = null; try {
             depenceRepo.deleteById(id);
@@ -147,13 +168,13 @@ public class BourseService implements IBourceService{
     }
     TypeDepenceRepo typeDepenceRepo;
     @Override
-    public TypeDepenceDTO save(TypeDepenceDTO typeDepenceDTO) {
+    public TypeDepenceDTO saveTypeDepence(TypeDepenceDTO typeDepenceDTO) {
         TypeDepence save = typeDepenceRepo.save(bourseMapper.fromTypeDepenceDTO(typeDepenceDTO));
         return bourseMapper.fromTypeDepence(save);
     }
 
     @Override
-    public TypeDepenceDTO update(TypeDepenceDTO typeDepenceDTO) throws TypeDepenceException {
+    public TypeDepenceDTO updateTypeDepence(TypeDepenceDTO typeDepenceDTO) throws TypeDepenceException {
         TypeDepence save = typeDepenceRepo.save(bourseMapper.fromTypeDepenceDTO(typeDepenceDTO));
         return bourseMapper.fromTypeDepence(save);
     }
@@ -175,7 +196,7 @@ public class BourseService implements IBourceService{
     }
 
     @Override
-    public void deletTypeDepenceDTO(Long id) throws TypeDepenceException {
+    public void deletTypeDepence(Long id) throws TypeDepenceException {
         TypeDepence typeDepence = null; try {
             typeDepenceRepo.deleteById(id);
         } catch (Exception e) {

@@ -3,6 +3,8 @@ package com.example.ens.controller;
 import com.example.ens.entities.Bourse;
 import com.example.ens.exception.BourseException;
 import com.example.ens.reposetory.BourseRepo;
+import com.example.ens.service.IBourceService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
+@CrossOrigin("*")
 @RequestMapping("/Bourse")
 public class BourseController  {
+
+    IBourceService service;
     @Autowired
     private BourseRepo bourseRepo;
     //Creation d'une bourse d'argent
@@ -27,7 +33,7 @@ public class BourseController  {
     }
 
     @GetMapping("/{id}")
-    public Bourse getBourseById(@PathVariable(name = "id") Long id) throws BourseException {
+    public Bourse getBourseById(@PathVariable(name = "id") Long id)  {
         return bourseRepo.findById(id).orElse(null);
     }
 

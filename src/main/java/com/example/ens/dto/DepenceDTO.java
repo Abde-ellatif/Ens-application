@@ -17,6 +17,7 @@ public class DepenceDTO {
     private String refDepence;
     private Date dateDepence;
     private double montantDepence;
+    private String benificiare;
     private TypeDepenceDTO typeDepence;
     private BourseDTO bourse;
 }
