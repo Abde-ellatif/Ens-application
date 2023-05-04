@@ -7,6 +7,7 @@ import com.example.ens.dto.req.DepenceReq;
 import com.example.ens.exception.BourseException;
 import com.example.ens.exception.DepenceException;
 import com.example.ens.exception.SourceException;
+import com.example.ens.exception.TypeDepenceException;
 import com.example.ens.service.IBourceService;
 import jakarta.websocket.DecodeException;
 import lombok.AllArgsConstructor;
@@ -44,8 +45,16 @@ public class DepenceController {
         service.deletDepence(idDeprnce);
     }
 
-    /*@GetMapping("/source/id")
-    public List<DepenceDTO> getAllDepenceByBourse(@PathVariable Long id) throws SourceException, DepenceException {
-        return (List<DepenceDTO>) service.getAllDepenceByBourse(id);
-    }*/
+    @GetMapping("/Bourse/{id}")
+    public List<DepenceDTO> getAllDepenceByBourse(@PathVariable(name="id") Long id) throws BourseException {
+        return service.findAllByBourse_Id(id);
+    }
+    @GetMapping("/Type/{id}")
+    public List<DepenceDTO> findAllByTypeDepence_Id(@PathVariable(name = "id") Long id) throws TypeNotPresentException, TypeDepenceException {
+        return service.findAllByTypeDepence_Id(id);
+    }
+    @GetMapping("/sum")
+    public double sumDepence() throws DepenceException{
+        return service.sumDepence();
+    }
 }

@@ -8,7 +8,11 @@ import com.example.ens.exception.BourseException;
 import com.example.ens.exception.SourceException;
 import com.example.ens.service.IBourceService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,15 +21,17 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin("*")
 @RequestMapping("/Bourse")
+@Slf4j
 public class BourseController {
 
     IBourceService service;
 
 
     @PostMapping()
-    public BourseDTO saveBourse(@RequestBody BourseReq req)throws BourseException{
-            return service.saveBourse(req);
-    }
+    public ResponseEntity<BourseDTO> saveBourse(@RequestBody BourseReq req)throws BourseException{
+        BourseDTO bourseDTO = service.saveBourse(req);
+        return new ResponseEntity<>(bourseDTO, HttpStatus.OK);
+   }
     @PutMapping("/{id}")
     public BourseDTO updateBourse(@PathVariable(name = "id") Long id,@RequestBody BourseDTO bourseDTO) throws BourseException{
         bourseDTO.setId(id);
@@ -42,6 +48,14 @@ public class BourseController {
     @DeleteMapping("/{id}")
     public void deletBourse(@PathVariable(name = "id") Long id) throws BourseException{
          service.deletBourse(id);
+    }
+    @GetMapping("/BySource/{id}")
+    public List<BourseDTO> findAllBysource_id(@PathVariable(name = "id") Long id) throws SourceException{
+        return service.findAllBysource_id(id);
+    }
+    @GetMapping("sum")
+    public double sumBourse() throws BourseException {
+        return service.sumBourse();
     }
 
     /*@GetMapping("/source/id")

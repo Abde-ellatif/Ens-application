@@ -17,6 +17,7 @@ import com.example.ens.reposetory.BourseRepo;
 import com.example.ens.reposetory.DepenceRepo;
 import com.example.ens.reposetory.SourceRepo;
 import com.example.ens.reposetory.TypeDepenceRepo;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +26,26 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional // pour garantir que les requette sql passe en mode transactionel begin commit ebn cas ok else roolback en cas ko
 public class BourseService implements IBourceService{
 
     BourseRepo bourseRepo;
     IBourseMapper bourseMapper;
     @Override
     public BourseDTO saveBourse(BourseDTO bourseDTO) {
+        // bourseReq
+        // tester sur source
         Bourse save = bourseRepo.save(bourseMapper.fromBourseDTO(bourseDTO));
         return bourseMapper.fromBourse(save);
     }
 
     @Override
     public BourseDTO updateBourse(BourseDTO bourseDTO) throws BourseException {
+        Bourse bourse = bourseRepo.findById(bourseDTO.getId()).orElse(null);
+        if(bourse==null)
+            throw new BourseException("Bourse not found");
         Bourse save = bourseRepo.save(bourseMapper.fromBourseDTO(bourseDTO));
+
         return bourseMapper.fromBourse(save);
     }
 
@@ -51,11 +59,23 @@ public class BourseService implements IBourceService{
     }
 
     @Override
-    public List<Bourse> findAllBysource_id(Long id) {
-        Bourse bourse= (Bourse) bourseRepo.findAllBysource_id(id);
-        return (List<Bourse>) bourse;
+    public List<BourseDTO> findAllBysource_id(Long id) throws SourceException {
+        //tester sur source
+        sourceRepo.findById(id).orElseThrow(()-> new SourceException("source not found"));
+        List<BourseDTO> collect = bourseRepo.findAllBySource_Id(id).stream().map(data -> {
+            return bourseMapper.fromBourse(data);
+        }).collect(Collectors.toList());
+        return collect;
     }
 
+   /* @Override
+    public List<DepenceDTO> findAllByBourse_Id(Long id) throws BourseException {
+        bourseRepo.findById(id).orElseThrow(()-> new BourseException("Bourse not found"));
+        List<DepenceDTO> collect = depenceRepo.findAllByBourse_Id(id).stream().map(data -> {
+            return bourseMapper.fromDepence(data);
+        }).collect(Collectors.toList());
+        return collect;
+    }*/
     /*@Override
     public BourseDTO getAllBourseBySource(Long idSourse) throws BourseException {
         Bourse bourse = (Bourse) bourseRepo.findAllById(Collections.singleton(idSourse));
@@ -85,6 +105,12 @@ public class BourseService implements IBourceService{
         BourseDTO bourseDTO = bourseMapper.fromBourse(bourse);
 
     }
+
+    @Override
+    public double sumBourse() throws BourseException {
+        return bourseRepo.getSumBourse();
+    }
+
     SourceRepo sourceRepo;
 
     @Override
@@ -95,7 +121,11 @@ public class BourseService implements IBourceService{
 
     @Override
     public SourceDTO updateSource(SourceDTO sourceDTO) throws SourceException {
+        Source source = sourceRepo.findById(sourceDTO.getId()).orElse(null);
+        if(source==null)
+            throw new SourceException("Source not found");
         Source save = sourceRepo.save(bourseMapper.fromSourceDTO(sourceDTO));
+
         return bourseMapper.fromSource(save);
     }
 
@@ -118,18 +148,17 @@ public class BourseService implements IBourceService{
     }
 
     @Override
-    public void deletSource(Long id) throws SourceException {
-        Source source = null; try {
-            sourceRepo.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("source not found");
-        }
-        SourceDTO sourceDTO = bourseMapper.fromSource(source);
+    public void deleteSource(Long id) throws SourceException {
+        sourceRepo.findById(id).orElseThrow(()->new SourceException("source nor found"));
+        sourceRepo.deleteById(id);
 
     }
     DepenceRepo depenceRepo;
     @Override
     public DepenceDTO saveDepence(DepenceDTO depenceDTO) {
+        //use depenceReq
+        //tester association Objet
+        //test of busniss rules (solde)
         Depence save = depenceRepo.save(bourseMapper.fromDepenceDTO(depenceDTO));
         return bourseMapper.fromDepence(save);
     }
@@ -159,24 +188,15 @@ public class BourseService implements IBourceService{
 
 
 
-    /*@Override
-    public List<DepenceDTO> getAllDepenceByBourse(Long idBource) {
-        Depence depence = (Depence) bourseRepo.findAllById(Collections.singleton(idBource));
-        DepenceDTO depenceDTO = bourseMapper.fromDepence(depence);
-        Bourse bourse = (Bourse) bourseRepo.findAll();
-        BourseDTO bourseDTO= bourseMapper.fromBourse(bourse);
-        return (List<DepenceDTO>) depenceDTO;
-    }*/
+
 
     @Override
     public void  deletDepence(Long id) throws DepenceException {
-        Depence depence = null; try {
+        try {
             depenceRepo.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("depence not found");
         }
-        DepenceDTO depenceDTO = bourseMapper.fromDepence(depence);
-
     }
     TypeDepenceRepo typeDepenceRepo;
     @Override
@@ -194,7 +214,7 @@ public class BourseService implements IBourceService{
     @Override
     public TypeDepenceDTO getTypeDepenceById(Long id) throws TypeDepenceException {
         TypeDepence typeDepence = typeDepenceRepo.findById(id).orElseThrow(() -> {
-            return new TypeDepenceException("source not found");
+            return new TypeDepenceException("typeDepense not found");
         });
         TypeDepenceDTO typeDepenceDTO = bourseMapper.fromTypeDepence(typeDepence);
         return typeDepenceDTO;
@@ -210,24 +230,41 @@ public class BourseService implements IBourceService{
 
     @Override
     public void deletTypeDepence(Long id) throws TypeDepenceException {
-        TypeDepence typeDepence = null; try {
+        try
+        {
             typeDepenceRepo.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("depence not found");
+            throw new TypeDepenceException("typedepence not found");
         }
-        TypeDepenceDTO typeDepenceDTO = bourseMapper.fromTypeDepence(typeDepence);
-
     }
 
     @Override
-    public List<Depence> findAllByBourse_Id(Long id) {
-        Depence depence = (Depence) depenceRepo.findAllByBourse_Id(id);
-        return (List<Depence>) depence;
+    public List<DepenceDTO> findAllByBourse_Id(Long id) throws BourseException {
+        bourseRepo.findById(id).orElseThrow(()-> new BourseException("Bourse not found"));
+        List<DepenceDTO> collect = depenceRepo.findAllByBourse_Id(id).stream().map(data -> {
+            return bourseMapper.fromDepence(data);
+        }).collect(Collectors.toList());
+        return collect;
+    }
+
+
+
+
+    @Override
+    public List<DepenceDTO> findAllByTypeDepence_Id(Long id) throws TypeDepenceException{
+        typeDepenceRepo.findById(id).orElseThrow(()->new TypeDepenceException("type depence not found"));
+        List<DepenceDTO> collect = depenceRepo.findAllByTypeDepence_Id(id).stream().map(data -> {
+            return bourseMapper.fromDepence(data);
+        }).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
-    public List<Depence> findAllByTypeDepence_id(Long id) {
-        Depence depence = (Depence) depenceRepo.findAllByTypeDepence_id(id);
-        return (List<Depence>) depence;
+    public double sumDepence() throws DepenceException {
+        return depenceRepo.getSumDepense();
+    }
+    public double solde(){
+        double solde = ((bourseRepo.getSumBourse())-(depenceRepo.getSumDepense()));
+        return solde;
     }
 }

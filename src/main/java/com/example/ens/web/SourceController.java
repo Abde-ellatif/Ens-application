@@ -38,11 +38,12 @@ public class SourceController {
     }
     @GetMapping("AllSource")
     public List<SourceDTO> getAllSource(){
+
         return service.getAllSource();
     }
     @DeleteMapping("/{id}")
-    public void deletSource(@PathVariable(name = "id") Long id) throws SourceException{
-        service.deletSource(id);
+    public void deleteSource(@PathVariable(name = "id") Long id) throws SourceException{
+        service.deleteSource(id);
     }
 
 }

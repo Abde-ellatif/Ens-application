@@ -1,24 +1,27 @@
 package com.example.ens;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import com.example.ens.reposetory.BourseRepo;
+import com.example.ens.reposetory.DepenceRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 //@RestController
-@OpenAPIDefinition
+
+
+@AllArgsConstructor
 public class EnsApplication {
 
 
-
+    BourseRepo bourseRepo;
+    DepenceRepo depenceRepo;
     public static void main(String[] args) {
 
         SpringApplication.run(EnsApplication.class, args);
 
     }
+
 
 
 }

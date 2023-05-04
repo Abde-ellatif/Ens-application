@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +16,9 @@ public class Source {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String objSource;
+
+
+
     /*@OneToMany(mappedBy = "source", fetch = FetchType.EAGER)
     List<Bourse> bourses=new ArrayList<>();*/
 }

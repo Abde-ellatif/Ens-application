@@ -20,9 +20,10 @@ public interface IBourceService {
     BourseDTO updateBourse(BourseDTO bourseDTO) throws BourseException;
     BourseDTO getBourseById(Long idBourse) throws BourseException;
     //BourseDTO getAllBourseBySource(Long idSource) throws BourseException;
-    List<Bourse> findAllBysource_id(Long id);
+    List<BourseDTO> findAllBysource_id(Long id) throws SourceException;
     List<BourseDTO> getAllBourse();
     void deletBourse(Long id) throws BourseException;
+    double sumBourse() throws BourseException;
 
 
     //Source
@@ -31,7 +32,7 @@ public interface IBourceService {
     SourceDTO updateSource(SourceDTO sourceDTO) throws SourceException;
     SourceDTO getSourceById(Long idSource) throws SourceException;
     List<SourceDTO> getAllSource();
-    void deletSource(Long idSource) throws SourceException;
+    void deleteSource(Long idSource) throws SourceException;
 
 
     //Depence
@@ -42,8 +43,9 @@ public interface IBourceService {
     List<DepenceDTO> getAllDepence();
     //List<DepenceDTO> getAllDepenceByBourse(Long idBource);
     void deletDepence(Long idDepence) throws DepenceException;
-    List<Depence> findAllByBourse_Id(Long id);
-    List<Depence> findAllByTypeDepence_id(Long id);
+    List<DepenceDTO> findAllByBourse_Id(Long id) throws BourseException;
+    List<DepenceDTO> findAllByTypeDepence_Id(Long id) throws TypeDepenceException;
+    double sumDepence() throws DepenceException;
     //Type Depence
 
     TypeDepenceDTO saveTypeDepence(TypeDepenceDTO typeDepenceDTO);
