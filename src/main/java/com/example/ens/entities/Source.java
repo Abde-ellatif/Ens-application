@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +22,6 @@ public class Source {
 
 
 
-    /*@OneToMany(mappedBy = "source", fetch = FetchType.EAGER)
-    List<Bourse> bourses=new ArrayList<>();*/
+//    @OneToMany(mappedBy = "source", fetch = FetchType.EAGER)
+//    List<Bourse> bourses=new ArrayList<>();
 }

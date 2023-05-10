@@ -1,8 +1,8 @@
 package com.example.ens.controllers;
 
 import com.example.ens.dto.SourceDTO;
-import com.example.ens.entities.Source;
 import com.example.ens.exception.SourceException;
+import com.example.ens.reposetory.SourceRepo;
 import com.example.ens.service.BourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import java.util.List;
 public class SourceCont {
     @Autowired
     BourseService bourseService;
+    SourceRepo sourceRepo;
     @RequestMapping("/createSource")
     public String createSource(){
 
@@ -36,8 +37,6 @@ public class SourceCont {
 
 
         SourceDTO memo = bourseService.saveSource(source);
-        String messageSucces="La source avec l'id "+memo.getId()+" est ajouter avec succes";
-        modelMap.addAttribute("messageJsp",messageSucces);
         return "source/CreateSource";
 
     }
@@ -48,7 +47,7 @@ public class SourceCont {
         SourceDTO memo = bourseService.updateSource(source);
         List<SourceDTO> sourceController = bourseService.getAllSource();
         modelMap.addAttribute("sourceJsp",sourceController);
-        return "SourceListe";
+        return "source/sourceListe";
 
     }
 
@@ -57,14 +56,15 @@ public class SourceCont {
     public String allSource(ModelMap modelMap){
         List<SourceDTO> sourceController = bourseService.getAllSource();
         modelMap.addAttribute("sourceJsp",sourceController);
-        return "SourceListe";
+        return "source/sourceListe";
     }
+
     @RequestMapping("/deleteSource")
     public String deleteSource(@RequestParam("id") Long id, ModelMap modelMap) throws SourceException {
         bourseService.deleteSource(id);
         List<SourceDTO> sourceController = bourseService.getAllSource();
         modelMap.addAttribute("sourceJsp",sourceController);
-        return "SourceListe";
+        return "source/sourceListe";
     }
 
 
@@ -72,7 +72,10 @@ public class SourceCont {
     public String showSource(@RequestParam("id") Long id, ModelMap modelMap) throws SourceException {
         SourceDTO sourceController = bourseService.getSourceById(id);
         modelMap.addAttribute("sourceJsp", sourceController);
-        return "EditeSource";
+        return "source/editeSource";
     }
+
+
+
 
 }

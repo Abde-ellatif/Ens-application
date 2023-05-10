@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.*;
@@ -25,6 +26,8 @@ public class Depence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String refDepence;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDepence;
     private double montantDepence;
     private String benificiaire;

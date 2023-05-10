@@ -4,6 +4,7 @@ import com.example.ens.dto.BourseDTO;
 import com.example.ens.dto.DepenceDTO;
 import com.example.ens.dto.SourceDTO;
 import com.example.ens.dto.TypeDepenceDTO;
+import com.example.ens.dto.req.BourseReq;
 import com.example.ens.entities.Bourse;
 import com.example.ens.entities.Depence;
 import com.example.ens.entities.Source;
@@ -22,6 +23,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,11 +34,27 @@ public class BourseService implements IBourceService{
     BourseRepo bourseRepo;
     IBourseMapper bourseMapper;
     @Override
-    public BourseDTO saveBourse(BourseDTO bourseDTO) {
+    public BourseDTO saveBourse(BourseReq req) throws SourceException {
         // bourseReq
         // tester sur source
-        Bourse save = bourseRepo.save(bourseMapper.fromBourseDTO(bourseDTO));
-        return bourseMapper.fromBourse(save);
+        //Bourse save = bourseRepo.save(bourseMapper.fromBourseDTO(bourseDTO));
+        //return bourseMapper.fromBourse(save);
+        System.out.println(req.toString());
+        Optional<Source> source = sourceRepo.findById(req.getSourceId());
+        if(source.isPresent())
+        {
+            BourseDTO bourseDTO=new BourseDTO();
+            bourseDTO.setDateBourse(req.getDateBourse());
+            bourseDTO.setMontantBourse(req.getMontantBourse());
+            bourseDTO.setRefBourse(req.getRefBourse());
+            bourseDTO.setSource(bourseMapper.fromSource(source.get()));
+            Bourse save = bourseRepo.save(bourseMapper.fromBourseDTO(bourseDTO));
+            return bourseMapper.fromBourse(save);
+        }
+        else
+        {
+            throw new SourceException("source not found");
+        }
     }
 
     @Override

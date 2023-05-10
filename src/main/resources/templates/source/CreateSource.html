@@ -1,0 +1,39 @@
+
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<header>
+    <h1>Creation d'une Sourec</h1>
+
+</header>
+
+<form method="post" th:action="@{saveSource}">
+    <!-- 2 column grid layout with text inputs for the first and last names -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="objSource">Objet de Source</label>
+                <input type="text" id="objSource" class="form-control" name="objSource" placeholder="Donner l'objet' de Source"/>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4" th:align="center">Ajouter</button>
+</form>
+</main>
+</body>
+</html>

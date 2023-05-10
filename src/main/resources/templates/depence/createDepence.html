@@ -1,0 +1,82 @@
+
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<header>
+    <h1>Creation d'une Depence</h1>
+
+</header>
+
+<form method="post" th:action="@{saveDepence}">
+    <!-- 2 column grid layout with text inputs for the first and last names -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="refDepence">Référence de Bourse</label>
+                <input type="text" id="refDepence" class="form-control" name="refDepence" placeholder="Donner la referece du depence"/>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="dateDepence">Date de réception</label>
+                <input type="datetime-local" id="dateDepence" name="dateDepence" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+
+        <!-- Text input -->
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="montantDepence">Montant de Bourse</label>
+                <input type="text" id="montantDepence" class="form-control" name="montantDepence"/>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="benificiare">Montant de Depence</label>
+                <input type="text" id="benificiare" class="form-control" name="benificiare"/>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="typeDepence">Source de Bourse</label>
+                <select id="typeDepence" name="typeDepence" class="form-control">
+                    <option  th:each="listType:${listTypeDepence}"
+                             th:value="${listType.id}"
+                             th:text="${listType.objDepence} ">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="bourse">Source de Bourse</label>
+                <select id="bourse" name="bourse" class="form-control">
+                    <option  th:each="listeBourse:${listBourse}"
+                             th:value="${listeBourse.id}"
+                             th:text="${listeBourse.refBourse} ">
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4" th:align="center">Ajouter la Depence</button>
+</form>
+</main>
+</body>
+</html>

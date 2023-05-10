@@ -28,7 +28,7 @@ public class BourseController {
 
 
     @PostMapping()
-    public ResponseEntity<BourseDTO> saveBourse(@RequestBody BourseReq req)throws BourseException{
+    public ResponseEntity<BourseDTO> saveBourse(@RequestBody BourseReq req) throws  SourceException {
         BourseDTO bourseDTO = service.saveBourse(req);
         return new ResponseEntity<>(bourseDTO, HttpStatus.OK);
    }

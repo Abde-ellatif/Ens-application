@@ -4,6 +4,7 @@ import com.example.ens.dto.BourseDTO;
 import com.example.ens.dto.DepenceDTO;
 import com.example.ens.dto.SourceDTO;
 import com.example.ens.dto.TypeDepenceDTO;
+import com.example.ens.dto.req.BourseReq;
 import com.example.ens.entities.Bourse;
 import com.example.ens.entities.Depence;
 import com.example.ens.exception.BourseException;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface IBourceService {
 
     //Bouse
-    BourseDTO saveBourse(BourseDTO bourseDTO);
+    BourseDTO saveBourse(BourseReq req) throws SourceException;
     BourseDTO updateBourse(BourseDTO bourseDTO) throws BourseException;
     BourseDTO getBourseById(Long idBourse) throws BourseException;
     //BourseDTO getAllBourseBySource(Long idSource) throws BourseException;
