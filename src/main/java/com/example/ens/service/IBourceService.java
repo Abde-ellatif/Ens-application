@@ -5,6 +5,7 @@ import com.example.ens.dto.DepenceDTO;
 import com.example.ens.dto.SourceDTO;
 import com.example.ens.dto.TypeDepenceDTO;
 import com.example.ens.dto.req.BourseReq;
+import com.example.ens.dto.req.DepenceReq;
 import com.example.ens.entities.Bourse;
 import com.example.ens.entities.Depence;
 import com.example.ens.exception.BourseException;
@@ -38,7 +39,7 @@ public interface IBourceService {
 
     //Depence
 
-    DepenceDTO saveDepence(DepenceDTO depenceDTO);
+    DepenceDTO saveDepence(DepenceReq req) throws BourseException,TypeDepenceException;
     DepenceDTO updateDepence(DepenceDTO depenceDTO) throws DepenceException;
     DepenceDTO getDepenceById(Long idDepence) throws DepenceException;
     List<DepenceDTO> getAllDepence();

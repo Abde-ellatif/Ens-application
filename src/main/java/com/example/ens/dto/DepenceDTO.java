@@ -2,10 +2,13 @@ package com.example.ens.dto;
 
 import com.example.ens.entities.Bourse;
 import com.example.ens.entities.TypeDepence;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 @AllArgsConstructor
@@ -14,10 +17,21 @@ import java.util.Date;
 @ToString
 public class DepenceDTO {
     private Long id;
-    private String refDepence;
+    private String refDepence;;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDepence;
     private double montantDepence;
     private String benificiare;
     private TypeDepenceDTO typeDepence;
     private BourseDTO bourse;
+
+
+    public String getBenificiare() {
+        return benificiare;
+    }
+
+    public void setBenificiare(String benificiare) {
+        this.benificiare = benificiare;
+    }
 }

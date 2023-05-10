@@ -11,6 +11,8 @@ import com.example.ens.exception.TypeDepenceException;
 import com.example.ens.service.IBourceService;
 import jakarta.websocket.DecodeException;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +26,11 @@ public class DepenceController {
 
 
     @PostMapping()
-    public DepenceDTO saveDepence(@RequestBody DepenceReq req)throws DecodeException {
+    public DepenceDTO saveDepence(@RequestBody DepenceReq req)throws BourseException, TypeDepenceException {
+        DepenceDTO depenceDTO = service.saveDepence(req);
         return service.saveDepence(req);
     }
+
     @PutMapping("/'{id}")
     public DepenceDTO updateDepence(@PathVariable(name = "id") Long id,@RequestBody DepenceDTO depenceDTO) throws  DepenceException {
         depenceDTO.setId(id);

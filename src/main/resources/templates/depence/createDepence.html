@@ -37,21 +37,23 @@
         <!-- Text input -->
         <div class="col">
             <div class="form-outline">
-                <label class="form-label" for="montantDepence">Montant de Bourse</label>
-                <input type="text" id="montantDepence" class="form-control" name="montantDepence"/>
+                <label class="form-label" for="montantDepence">Montant de Depence</label>
+                <input type="number" id="montantDepence" class="form-control" name="montantDepence"/>
             </div>
         </div>
         <div class="col">
             <div class="form-outline">
-                <label class="form-label" for="benificiare">Montant de Depence</label>
-                <input type="text" id="benificiare" class="form-control" name="benificiare"/>
+                <label class="form-label" for="benificiaire">Bénificiaire</label>
+                <input type="text" id="benificiaire" class="form-control" name="benificiaire" placeholder="Bénificiaire"/>
             </div>
         </div>
+    </div>
+    <div class="row mb-4">
 
         <div class="col">
             <div class="form-outline">
-                <label class="form-label" for="typeDepence">Source de Bourse</label>
-                <select id="typeDepence" name="typeDepence" class="form-control">
+                <label class="form-label" for="typeDepenceId">Type de Depence</label>
+                <select id="typeDepenceId" name="typeDepenceId" class="form-control">
                     <option  th:each="listType:${listTypeDepence}"
                              th:value="${listType.id}"
                              th:text="${listType.objDepence} ">
@@ -61,8 +63,8 @@
         </div>
         <div class="col">
             <div class="form-outline">
-                <label class="form-label" for="bourse">Source de Bourse</label>
-                <select id="bourse" name="bourse" class="form-control">
+                <label class="form-label" for="bourseId">Source de Bourse</label>
+                <select id="bourseId" name="bourseId" class="form-control">
                     <option  th:each="listeBourse:${listBourse}"
                              th:value="${listeBourse.id}"
                              th:text="${listeBourse.refBourse} ">

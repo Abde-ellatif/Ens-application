@@ -5,6 +5,7 @@ import com.example.ens.dto.DepenceDTO;
 import com.example.ens.dto.SourceDTO;
 import com.example.ens.dto.TypeDepenceDTO;
 import com.example.ens.dto.req.BourseReq;
+import com.example.ens.dto.req.DepenceReq;
 import com.example.ens.entities.Bourse;
 import com.example.ens.entities.Depence;
 import com.example.ens.entities.Source;
@@ -173,12 +174,38 @@ public class BourseService implements IBourceService{
     }
     DepenceRepo depenceRepo;
     @Override
-    public DepenceDTO saveDepence(DepenceDTO depenceDTO) {
-        //use depenceReq
-        //tester association Objet
-        //test of busniss rules (solde)
-        Depence save = depenceRepo.save(bourseMapper.fromDepenceDTO(depenceDTO));
-        return bourseMapper.fromDepence(save);
+//    public DepenceDTO saveDepence(DepenceDTO depenceDTO) {
+//        //use depenceReq
+//        //tester association Objet
+//        //test of busniss rules (solde)
+//        Depence save = depenceRepo.save(bourseMapper.fromDepenceDTO(depenceDTO));
+//        return bourseMapper.fromDepence(save);
+//    }
+    public DepenceDTO saveDepence(DepenceReq req) throws BourseException,TypeDepenceException {
+        // bourseReq
+        // tester sur source
+        //Bourse save = bourseRepo.save(bourseMapper.fromBourseDTO(bourseDTO));
+        //return bourseMapper.fromBourse(save);
+        System.out.println(req.toString());
+//        Optional<Source> source = sourceRepo.findById(req.getSourceId());
+        Optional<Bourse> bourse = bourseRepo.findById(req.getBourseId());
+        Optional<TypeDepence> typeDepence = typeDepenceRepo.findById(req.getTypeDepenceId());
+        if(bourse.isPresent() && typeDepence.isPresent())
+        {
+            DepenceDTO depenceDTO=new DepenceDTO();
+            depenceDTO.setDateDepence(req.getDateDepence());
+            depenceDTO.setMontantDepence(req.getMontantDepence());
+            depenceDTO.setRefDepence(req.getRefDepence());
+            depenceDTO.setBenificiare(req.getBenificiare());
+            depenceDTO.setBourse(bourseMapper.fromBourse(bourse.get()));
+            depenceDTO.setTypeDepence(bourseMapper.fromTypeDepence(typeDepence.get()));
+            Depence save = depenceRepo.save(bourseMapper.fromDepenceDTO(depenceDTO));
+            return bourseMapper.fromDepence(save);
+        }
+        else
+        {
+            throw new BourseException("Bourse not found or type of depense not found") ;
+        }
     }
 
     @Override

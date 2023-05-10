@@ -4,8 +4,12 @@ import com.example.ens.dto.BourseDTO;
 import com.example.ens.dto.DepenceDTO;
 import com.example.ens.dto.SourceDTO;
 import com.example.ens.dto.TypeDepenceDTO;
+import com.example.ens.dto.req.BourseReq;
+import com.example.ens.dto.req.DepenceReq;
 import com.example.ens.exception.BourseException;
 import com.example.ens.exception.DepenceException;
+import com.example.ens.exception.SourceException;
+import com.example.ens.exception.TypeDepenceException;
 import com.example.ens.service.BourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,10 +41,16 @@ public class DepenceCont {
     }
     //save
     @RequestMapping("/saveDepence")
-    public String saveDepence( DepenceDTO depenceDTO, ModelMap modelMap) {
-        DepenceDTO memo = bourseService.saveDepence(depenceDTO);
+    public String saveDepence(@ModelAttribute("depence") DepenceReq req) throws BourseException, TypeDepenceException {
+        DepenceDTO memo = bourseService.saveDepence(req);
         return "depence/createDepence";
     }
+
+
+//    public String saveBourse(@ModelAttribute("bourse") BourseReq req ) throws SourceException {
+//        BourseDTO memo = bourseService.saveBourse(req);
+//        return "bourse/createBourse";
+//    }
     //update
     @RequestMapping("/updateDepence")
     public String updateDepence(@ModelAttribute("depence") DepenceDTO depenceDTO, ModelMap modelMap) throws DepenceException {
