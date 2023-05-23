@@ -32,14 +32,9 @@
         </thead>
         <tbody>
         <tr th:each="sumB:${sumBourse}">
-            <th scope="row" th:text="${sumB.sumBource()}"></th>
-            <th scope="row" th:text="${.objSource}"></th>
-            <th>
+            <th scope="row" th:text="${sumB.sumBourse()}"></th>
+<!--            <th scope="row" th:text="${sumD.sumDepense()}"></th>-->
 
-                <a class="btn btn-danger"  onclick="return confirm('are you shure to delete this item ?')" href="deleteSource?id=${source.id}">Delete</a>
-                <a class="btn btn-success" href="showSource?id=${source.id}">Edite</a>
-
-            </th>
         </tr>
 
         </tbody>

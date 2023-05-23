@@ -3,10 +3,12 @@ package com.example.ens.controllers;
 import com.example.ens.dto.BourseDTO;
 import com.example.ens.dto.SourceDTO;
 import com.example.ens.dto.TypeDepenceDTO;
+import com.example.ens.entities.TypeDepence;
 import com.example.ens.exception.BourseException;
 import com.example.ens.exception.TypeDepenceException;
 import com.example.ens.service.BourseService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +36,14 @@ public class TypeCont {
     }
     //update
     @RequestMapping("/updateType")
-    public String updateType(@ModelAttribute("typeDepence") TypeDepenceDTO typeDepenceDTO, ModelMap modelMap) throws TypeDepenceException {
+    public String updateType(@ModelAttribute("typeDepence") TypeDepenceDTO typeDepenceDTO, ModelMap modelMap,
+                             @RequestParam(name = "page" ,defaultValue = "0") int page,
+                             @RequestParam(name = "size" ,defaultValue = "10" )int size) throws TypeDepenceException {
         TypeDepenceDTO memo = bourseService.updateTypeDepence(typeDepenceDTO);
-        List<TypeDepenceDTO> typeDepenceController = bourseService.getAllTypeDepence();
-        modelMap.addAttribute("typeDepence",typeDepenceController);
+        Page<TypeDepence> typeController = bourseService.getAllTypeByPage(page, size);
+        modelMap.addAttribute("typeDepence",typeController);
+        modelMap.addAttribute("pages", new int[typeController.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
         return "typeDepence/typeListe";
 
     }
@@ -54,18 +60,26 @@ public class TypeCont {
 
     //lister
     @RequestMapping("/allType")
-    public String allType(ModelMap modelMap){
-        List<TypeDepenceDTO> typeController = bourseService.getAllTypeDepence();
+    public String allType(ModelMap modelMap,
+                          @RequestParam(name = "page" ,defaultValue = "0") int page,
+                          @RequestParam(name = "size" ,defaultValue = "10" )int size){
+        Page<TypeDepence> typeController = bourseService.getAllTypeByPage(page, size);
         modelMap.addAttribute("typeDepence",typeController);
+        modelMap.addAttribute("pages", new int[typeController.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
         return "typeDepence/typeListe";
     }
 
     //delete
     @RequestMapping("/deleteType")
-    public String deleteType(@RequestParam("id") Long id, ModelMap modelMap) throws TypeDepenceException {
+    public String deleteType(@RequestParam("id") Long id, ModelMap modelMap,
+                             @RequestParam(name = "page" ,defaultValue = "0") int page,
+                             @RequestParam(name = "size" ,defaultValue = "10" )int size) throws TypeDepenceException {
         bourseService.deletTypeDepence(id);
-        List<TypeDepenceDTO> typeDepenceController = bourseService.getAllTypeDepence();
-        modelMap.addAttribute("typeDepence",typeDepenceController);
+        Page<TypeDepence> typeController = bourseService.getAllTypeByPage(page, size);
+        modelMap.addAttribute("typeDepence",typeController);
+        modelMap.addAttribute("pages", new int[typeController.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
         return "typeDepence/typeListe";
     }
 

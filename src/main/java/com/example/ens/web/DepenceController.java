@@ -2,8 +2,11 @@ package com.example.ens.web;
 
 import com.example.ens.dto.BourseDTO;
 import com.example.ens.dto.DepenceDTO;
+import com.example.ens.dto.TestDepenceDTO;
 import com.example.ens.dto.req.BourseReq;
 import com.example.ens.dto.req.DepenceReq;
+import com.example.ens.entities.Bourse;
+import com.example.ens.entities.Depence;
 import com.example.ens.exception.BourseException;
 import com.example.ens.exception.DepenceException;
 import com.example.ens.exception.SourceException;
@@ -26,13 +29,14 @@ public class DepenceController {
 
 
     @PostMapping()
-    public DepenceDTO saveDepence(@RequestBody DepenceReq req)throws BourseException, TypeDepenceException {
-        DepenceDTO depenceDTO = service.saveDepence(req);
-        return service.saveDepence(req);
+    public DepenceDTO saveDepence(@RequestBody DepenceReq req) throws BourseException, TypeDepenceException, DepenceException {
+            //DepenceDTO depenceDTO = service.saveDepence(req);
+            //return service.saveDepence(req);
+        return null;
     }
 
     @PutMapping("/'{id}")
-    public DepenceDTO updateDepence(@PathVariable(name = "id") Long id,@RequestBody DepenceDTO depenceDTO) throws  DepenceException {
+    public TestDepenceDTO updateDepence(@PathVariable(name = "id") Long id, @RequestBody DepenceReq depenceDTO) throws DepenceException, BourseException {
         depenceDTO.setId(id);
         return service.updateDepence(depenceDTO);
     }

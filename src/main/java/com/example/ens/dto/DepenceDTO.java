@@ -22,16 +22,8 @@ public class DepenceDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDepence;
     private double montantDepence;
-    private String benificiare;
+    private String benificiaire;
     private TypeDepenceDTO typeDepence;
     private BourseDTO bourse;
 
-
-    public String getBenificiare() {
-        return benificiare;
-    }
-
-    public void setBenificiare(String benificiare) {
-        this.benificiare = benificiare;
-    }
 }

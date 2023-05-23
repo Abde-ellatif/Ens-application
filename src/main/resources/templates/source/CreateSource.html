@@ -1,39 +1,67 @@
-
-
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css" />
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="index.html">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-primary.btn-block {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-<header>
-    <h1>Creation d'une Sourec</h1>
+<div layout:fragment="content">
+    <h1 class="header">Création d'une Source</h1>
 
-</header>
 
 <form method="post" th:action="@{saveSource}">
-    <!-- 2 column grid layout with text inputs for the first and last names -->
     <div class="row mb-4">
         <div class="col">
             <div class="form-outline">
-                <label class="form-label" for="objSource">Objet de Source</label>
-                <input type="text" id="objSource" class="form-control" name="objSource" placeholder="Donner l'objet' de Source"/>
+                <label class="form-label" for="objSource">Objet de la Source</label>
+                <input type="text" id="objSource" class="form-control" name="objSource" placeholder="Donner l'objet de la Source"/>
             </div>
         </div>
-
     </div>
-
-
-
-
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block mb-4" th:align="center">Ajouter</button>
+    <button type="submit" class="btn btn-primary btn-block mb-4">Ajouter</button>
 </form>
-</main>
+</div>
 </body>
 </html>

@@ -1,12 +1,15 @@
 package com.example.ens.controllers;
 
 import com.example.ens.dto.BourseDTO;
+import com.example.ens.dto.DepenceDTO;
 import com.example.ens.dto.SourceDTO;
 import com.example.ens.dto.req.BourseReq;
+import com.example.ens.entities.Bourse;
 import com.example.ens.exception.BourseException;
 import com.example.ens.exception.SourceException;
 import com.example.ens.service.BourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +38,15 @@ public class BourseCont {
     }
     //update
     @RequestMapping("/updateBourse")
-    public String updateBourse(@ModelAttribute("bourse") BourseDTO bourse, ModelMap modelMap) throws  BourseException {
-        BourseDTO memo = bourseService.updateBourse(bourse);
-        List<BourseDTO> bourseController = bourseService.getAllBourse();
+    public String updateBourse(@ModelAttribute("bourse") BourseReq req, ModelMap modelMap,
+                               @RequestParam(name = "page" ,defaultValue = "0") int page,
+                               @RequestParam(name = "size" ,defaultValue = "10" )int size) throws BourseException, SourceException {
+        System.out.println(req.toString());
+        BourseDTO memo = bourseService.updateBourse(req);
+        Page<Bourse> bourseController = bourseService.getAllBourseByPage(page, size);
         modelMap.addAttribute("bourse",bourseController);
+        modelMap.addAttribute("pages", new int[bourseController.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
         return "bourse/bourseListe";
 
     }
@@ -48,29 +56,38 @@ public class BourseCont {
     @RequestMapping("/showBourse")
     public String showBourse(@RequestParam("id") Long id, ModelMap modelMap) throws BourseException {
 
+
+        BourseDTO bourseController = bourseService.getBourseById(id);
+        modelMap.addAttribute("bourse", bourseController);
         List<SourceDTO> listSource = bourseService.getAllSource();
         modelMap.addAttribute("listesource",listSource);
         modelMap.addAttribute("source",new SourceDTO());
-        BourseDTO bourseController = bourseService.getBourseById(id);
-        modelMap.addAttribute("bourse", bourseController);
         return "bourse/editBourse";
     }
 
 
     //lister
     @RequestMapping("/allBourse")
-    public String allBourse(ModelMap modelMap){
-        List<BourseDTO> bourseController = bourseService.getAllBourse();
+    public String allBourse(ModelMap modelMap ,
+                            @RequestParam(name = "page" ,defaultValue = "0") int page,
+                            @RequestParam(name = "size" ,defaultValue = "10" )int size){
+        Page<Bourse> bourseController = bourseService.getAllBourseByPage(page, size);
         modelMap.addAttribute("bourse",bourseController);
+        modelMap.addAttribute("pages", new int[bourseController.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
         return "bourse/bourseListe";
     }
 
     //delete
     @RequestMapping("/deleteBourse")
-    public String deleteBourse(@RequestParam("id") Long id, ModelMap modelMap) throws BourseException {
+    public String deleteBourse(@RequestParam("id") Long id, ModelMap modelMap,
+                               @RequestParam(name = "page" ,defaultValue = "0") int page,
+                               @RequestParam(name = "size" ,defaultValue = "10" )int size) throws BourseException {
         bourseService.deletBourse(id);
-        List<BourseDTO> bourseController = bourseService.getAllBourse();
+        Page<Bourse> bourseController = bourseService.getAllBourseByPage(page, size);
         modelMap.addAttribute("bourse",bourseController);
+        modelMap.addAttribute("pages", new int[bourseController.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
         return "bourse/bourseListe";
     }
 

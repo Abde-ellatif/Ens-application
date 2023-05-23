@@ -16,13 +16,13 @@ import java.util.Date;
 @Setter
 @ToString
 public class DepenceReq  {
-
+    private Long id;
     private String refDepence;;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDepence;
     private double montantDepence;
-    private String benificiare;
+    private String benificiaire;
     private Long typeDepenceId;
     private Long bourseId;
 }

@@ -32,11 +32,11 @@ public class BourseController {
         BourseDTO bourseDTO = service.saveBourse(req);
         return new ResponseEntity<>(bourseDTO, HttpStatus.OK);
    }
-    @PutMapping("/{id}")
-    public BourseDTO updateBourse(@PathVariable(name = "id") Long id,@RequestBody BourseDTO bourseDTO) throws BourseException{
-        bourseDTO.setId(id);
-        return service.updateBourse(bourseDTO);
-    }
+//    @PutMapping("/{id}")
+//    public BourseDTO updateBourse(@PathVariable(name = "id") Long id,@RequestBody BourseReq bourseDTO) throws BourseException, SourceException {
+//        bourseDTO.setId(id);
+//        return service.updateBourse(bourseDTO);
+//    }
     @GetMapping("/{id}")
     public BourseDTO getBourseById(@PathVariable(name = "id") Long id) throws BourseException{
         return service.getBourseById(id);

@@ -1,14 +1,10 @@
 package com.example.ens.mapper;
 
-import com.example.ens.dto.BourseDTO;
-import com.example.ens.dto.DepenceDTO;
-import com.example.ens.dto.SourceDTO;
-import com.example.ens.dto.TypeDepenceDTO;
+import com.example.ens.dto.*;
 import com.example.ens.entities.Bourse;
 import com.example.ens.entities.Depence;
 import com.example.ens.entities.Source;
 import com.example.ens.entities.TypeDepence;
-import org.springframework.context.annotation.Bean;
 
 public interface IBourseMapper {
     BourseDTO fromBourse(Bourse bourse);
@@ -22,4 +18,5 @@ public interface IBourseMapper {
 
     TypeDepenceDTO fromTypeDepence(TypeDepence typeDepence);
     TypeDepence fromTypeDepenceDTO(TypeDepenceDTO typeDepenceDTO);
+
 }
