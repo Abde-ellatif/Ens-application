@@ -21,7 +21,7 @@ public class EnsApplication {
     BourseRepo bourseRepo;
     DepenceRepo depenceRepo;
     BourseService bourseService;
-    @Bean
+    /*@Bean
     public double sumBoursee(){
         System.out.println("le montant des bourse est "+bourseRepo.getSumBourse());
         return bourseRepo.getSumBourse();
@@ -36,7 +36,7 @@ public class EnsApplication {
         System.out.println("le solde est : "+ bourseService.solde());
         return bourseService.solde();
     }
-
+*/
     public static void main(String[] args) throws BourseException {
 
         SpringApplication.run(EnsApplication.class, args);

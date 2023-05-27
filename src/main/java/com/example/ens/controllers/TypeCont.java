@@ -30,7 +30,7 @@ public class TypeCont {
     }
     //save
     @RequestMapping("/saveType")
-    public String saveType( TypeDepenceDTO typeDepenceDTO, ModelMap modelMap) {
+    public String saveType(@ModelAttribute("typeDepence") TypeDepenceDTO typeDepenceDTO, ModelMap modelMap) {
         TypeDepenceDTO memo = bourseService.saveTypeDepence(typeDepenceDTO);
         return "typeDepence/createType";
     }
